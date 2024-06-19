@@ -21,8 +21,8 @@ export class Agent {
   registrationDate: Date;
 
   @Column()
-  callPermission: boolean;
+  canMakeCalls: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   photo: string;
 }
