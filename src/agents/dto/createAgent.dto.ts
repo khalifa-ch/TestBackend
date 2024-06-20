@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsString,
   IsEmail,
@@ -31,11 +32,11 @@ export class CreateAgentDto {
   @IsNotEmpty()
   registrationDate: Date;
 
+  @Transform(({ value }) => value === 'true')
   @IsNotEmpty()
   @IsBoolean()
   canMakeCalls: boolean;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
   photo: string;
 }

@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Agent } from './agents/agent.entity';
 import { User } from './users/user.entity';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -30,6 +32,10 @@ import { User } from './users/user.entity';
     }),
     UsersModule,
     AgentsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      exclude: ['/api/(.*)'],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
