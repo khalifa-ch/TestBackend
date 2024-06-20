@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { Match } from './Decorators/MatchDecorator';
 
 export class UserDto {
   @IsEmail()
@@ -7,9 +8,15 @@ export class UserDto {
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(8, {
+    message: 'Password must be at least 8 characters long',
+  })
   password: string;
 
   @IsString()
   @IsNotEmpty()
+  @Match('password', {
+    message: 'ConfirmPassword must match Password',
+  })
   confirmPassword: string;
 }

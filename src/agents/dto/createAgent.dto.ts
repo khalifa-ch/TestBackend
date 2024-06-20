@@ -5,15 +5,19 @@ import {
   IsBoolean,
   IsOptional,
   IsNotEmpty,
+  MinLength,
 } from 'class-validator';
 
 export class CreateAgentDto {
   @IsNotEmpty()
   @IsString()
+  @MinLength(2, {
+    message: 'Name must be at least 2 characters long',
+  })
   name: string;
 
   @IsNotEmpty()
-  @IsPhoneNumber()
+  @IsPhoneNumber('TN', { message: 'Phone number must be a valid TN number' })
   phoneNumber: string;
 
   @IsNotEmpty()
@@ -31,7 +35,7 @@ export class CreateAgentDto {
   @IsBoolean()
   canMakeCalls: boolean;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   photo: string;
 }
