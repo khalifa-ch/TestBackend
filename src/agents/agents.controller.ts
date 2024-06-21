@@ -23,8 +23,10 @@ import { PaginationQueryDto } from './dto/pagination-query.dto';
 import { extname } from 'path';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 
 @UseGuards(JwtGuard)
+@ApiBearerAuth()
 @Controller('agents')
 export class AgentsController {
   constructor(private readonly agentsService: AgentsService) {}
@@ -50,6 +52,7 @@ export class AgentsController {
       },
     }),
   )
+  @ApiConsumes('multipart/form-data')
   create(
     @Body() createAgentDto: CreateAgentDto,
     @UploadedFile() file: Express.Multer.File,
@@ -74,7 +77,6 @@ export class AgentsController {
   }
 
   @Get()
-  @UsePipes(new ValidationPipe({ transform: true }))
   getAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.agentsService.findAll(paginationQuery);
   }

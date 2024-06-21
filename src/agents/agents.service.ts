@@ -13,7 +13,13 @@ export class AgentsService {
     private repo: Repository<Agent>,
   ) {}
 
-  create(createAgentDto: CreateAgentDto): Promise<Agent> {
+  async create(createAgentDto: CreateAgentDto): Promise<Agent> {
+    const agentExist = await this.repo.findOne({
+      where: { email: createAgentDto.email },
+    });
+    if (agentExist) {
+      throw new NotFoundException('email  already in use');
+    }
     const agent = this.repo.create(createAgentDto);
     return this.repo.save(agent);
   }

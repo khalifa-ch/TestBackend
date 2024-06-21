@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsOptional,
@@ -8,29 +9,34 @@ import {
 } from 'class-validator';
 
 export class PaginationQueryDto {
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsPositive()
   @Type(() => Number)
   page: number = 1;
 
   @IsOptional()
+  @ApiProperty({required:false})
   @IsPositive()
   @Min(1)
   @Type(() => Number)
   limit: number = 10;
 
   @IsOptional()
+  @ApiProperty({required:false})
   @IsString()
-  searchName?: string
+  searchName?: string;
   @IsOptional()
   @IsDateString()
   startDate?: string;
 
   @IsOptional()
+  @ApiProperty({required:false})
   @IsDateString()
   endDate?: string;
 
   @IsOptional()
+  @ApiProperty({required:false})
   @IsString()
   destinationGroup?: string;
 }

@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Agent {
@@ -17,7 +22,7 @@ export class Agent {
   @Column()
   destinationGroup: string;
 
-  @Column()
+  @CreateDateColumn()
   registrationDate: Date;
 
   @Column()

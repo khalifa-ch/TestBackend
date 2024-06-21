@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsString,
@@ -10,6 +11,7 @@ import {
 } from 'class-validator';
 
 export class CreateAgentDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @MinLength(2, {
@@ -18,25 +20,27 @@ export class CreateAgentDto {
   name: string;
 
   @IsNotEmpty()
+  @ApiProperty()
   @IsPhoneNumber('TN', { message: 'Phone number must be a valid TN number' })
   phoneNumber: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   destinationGroup: string;
 
-  @IsNotEmpty()
-  registrationDate: Date;
-
+  @ApiProperty()
   @Transform(({ value }) => value === 'true')
   @IsNotEmpty()
   @IsBoolean()
   canMakeCalls: boolean;
 
   @IsOptional()
-  photo: string;
+  @ApiPropertyOptional({ type: 'string', format: 'binary', required: true })
+  photo?: string;
 }
